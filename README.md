@@ -2,6 +2,32 @@
 
 A babel plugin to do the dirty work for react-cohere. Forms coherent routes that defines required data dependencies to allow for a declarative and simple approach to server side rendering in React.
 
+## Installation
+
+```sh
+$ npm install babel-plugin-react-cohere
+```
+
+## Usage
+
+### Via `.babelrc` (recommended)
+
+**.babelrc**
+
+```json
+{
+  "plugins": ["react-cohere"]
+}
+```
+
+### Via Node API
+
+```javascript
+require("babel-core").transform("code", {
+  plugins: ["react-cohere"]
+});
+```
+
 ## Example
 
 **In**
@@ -67,36 +93,4 @@ babel-plugin-react-cohere will identify that it includes a component with a cohe
 HomePage.waitsFor = [
   MyComponent
 ]
-```
-
-## Installation
-
-```sh
-$ npm install babel-plugin-react-cohere
-```
-
-## Usage
-
-### Via `.babelrc` (Recommended)
-
-**.babelrc**
-
-```json
-{
-  "plugins": ["react-cohere"]
-}
-```
-
-### Via CLI
-
-```sh
-$ babel --plugins boilerplate script.js
-```
-
-### Via Node API
-
-```javascript
-require("babel-core").transform("code", {
-  plugins: ["react-cohere"]
-});
 ```
