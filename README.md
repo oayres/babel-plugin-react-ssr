@@ -5,7 +5,7 @@ A babel plugin to do the dirty work for react-cohere. Forms coherent routes that
 ## Installation
 
 ```sh
-$ npm install babel-plugin-react-cohere
+$ npm install babel-plugin-react-cohere --save-dev
 ```
 
 ## Usage
@@ -39,10 +39,7 @@ import React, { Component } from 'react'
 
 const someCall = () => {
   return new Promise((resolve, reject) => {
-    fetch('/api')
-      .then(res => response.json())
-      .then(resolve)
-      .catch(reject)
+    setTimeout(() => resolve('MyComponent example'), 500)
   })
 }
 
@@ -65,7 +62,7 @@ class MyComponent extends Component {
 export default MyComponent
 ```
 
-With a HomePage using the above component:
+That'd render out `Hello from MyComponent example!`. Now a HomePage using the above component:
 
 ```js
 import React, { Component } from 'react'
