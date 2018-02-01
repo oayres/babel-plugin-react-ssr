@@ -1,8 +1,8 @@
 {
-  "name": "babel-plugin-react-cohere",
+  "name": "babel-plugin-react-ssr",
   "version": "0.0.1",
   "description": "Dynamically generates static references on React components to data calls for server-side rendering.",
-  "repository": "oayres/babel-plugin-react-cohere",
+  "repository": "oayres/babel-plugin-react-ssr",
   "author": "Owen Ayres <owen.ayres@gmail.com>",
   "main": "lib/index.js",
   "scripts": {
