@@ -28,7 +28,7 @@ Chuck me straight in the `.babelrc` and you're *done*.
 
 Let's assume you have a page like this, with data calls you want to server-side render:
 
-```js
+```jsx
 import React, { Component } from 'react'
 import MyComponent from './components/MyComponent'
 
