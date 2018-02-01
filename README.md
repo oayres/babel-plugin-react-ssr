@@ -2,7 +2,7 @@
 
 A babel plugin to do the hidden dirty work for react-ssr. It is _strongly advised_ you use this babel plugin alongside `react-ssr` to acheive seamless server-side rendering.
 
-This babel plugin will find all of your React components with `static fetchData` methods and do the following things to them:
+This plugin will find all React components with `static fetchData` methods and do the following things to them:
 
 - Wrap it in a HOC (higher order component)
 - Add a static `_ssrWaitsFor` array
@@ -65,7 +65,7 @@ export default HomePage
 
 Let's also assume your `MyComponent` imported in that example also has a `static fetchData` method.
 
-The babel plugin will detect the `HomePage` has a `static fetchData` method and therefore carry out its three tasks:
+The plugin will detect the `HomePage` has a `static fetchData` method and therefore carry out its three tasks:
 
 - Wrap it in a HOC (that comes from `react-ssr`)
 ```js
