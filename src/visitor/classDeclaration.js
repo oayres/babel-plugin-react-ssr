@@ -1,8 +1,22 @@
 import classHasRenderMethod from '../helpers/classHasRenderMethod'
-import assignWaitsForProperty from '../helpers/assignWaitsForProperty'
-import assignPropsForServerRenderProperty from '../helpers/assignPropsForServerRenderProperty'
+import assignStaticArray from '../helpers/assignStaticArray'
+
+const injectIfJSXElement = (child, waitsFor = []) => {
+  if (child.type === 'JSXElement' && child.openingElement) {
+    const element = child.openingElement.name
+    const isJSX = element.type === 'JSXIdentifier'
+    const isNotDOMElement = element.name !== element.name.toLowerCase()
+
+    if (isJSX && isNotDOMElement) {
+      waitsFor.push(child)
+    }
+  }
+
+  return waitsFor
+}
 
 const extractComponents = (waitsFor, propertyOrMethod) => {
+  console.info('Got a property or method: ', propertyOrMethod)
   const subBody = propertyOrMethod.body.body
 
   if (subBody) {
@@ -12,15 +26,7 @@ const extractComponents = (waitsFor, propertyOrMethod) => {
       returnStatements.forEach(statement => {
         if (statement.argument.type === 'JSXElement' && statement.argument.children && statement.argument.children.length) {
           statement.argument.children.forEach(child => {
-            if (child.type === 'JSXElement' && child.openingElement) {
-              const element = child.openingElement.name
-              const isJSX = element.type === 'JSXIdentifier'
-              const isNotDOMElement = element.name !== element.name.toLowerCase()
-
-              if (isJSX && isNotDOMElement) {
-                waitsFor.push(child)
-              }
-            }
+            waitsFor = injectIfJSXElement(child, waitsFor)
           })
         }
       })
@@ -58,16 +64,18 @@ const classDeclaration = (babel, path, state) => {
 
     body.forEach(propertyOrMethod => {
       if (propertyOrMethod.static && propertyOrMethod.key.name === 'fetchData') {
+        state.file.set('hasFetchData', true)
         propsForServerRender = extractPropsForServerRender(babel, propsForServerRender, propertyOrMethod)
       }
 
-      if (propertyOrMethod.type === 'ClassMethod' && propertyOrMethod.key.name === 'render') {
+      if (propertyOrMethod.type === 'ClassMethod') {
         waitsFor = extractComponents(waitsFor, propertyOrMethod)
       }
     })
 
-    assignPropsForServerRenderProperty(path.get('body'), path.node.id, babel.types, propsForServerRender)
-    assignWaitsForProperty(path, path.node.id, babel.types, waitsFor)
+    assignStaticArray(path.get('body'), babel.types, '_ssrProps', propsForServerRender)
+    // console.info('The waitsFor property: ', waitsFor)
+    // assignStaticArray(path.get('body'), babel.types, '_ssrWaitsFor', waitsFor)
   }
 }
 
