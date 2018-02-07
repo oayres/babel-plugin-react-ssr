@@ -86,7 +86,7 @@ The plugin will detect the `HomePage` has a `static fetchData` method and theref
 
 - Wrap it in a HOC (that comes from `react-ssr`)
 ```js
-export default _cohere(HomePage)
+export default ssrFetchData(HomePage)
 ```
 
 - Add a static `_ssrWaitsFor`, populating it with `MyComponent` after detecting it also has a `static fetchData`
