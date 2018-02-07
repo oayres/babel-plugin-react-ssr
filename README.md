@@ -1,5 +1,21 @@
 # babel-plugin-react-ssr
 
+<a href="https://www.npmjs.com/package/babel-plugin-react-ssr">
+  <img src="https://img.shields.io/npm/v/babel-plugin-react-ssr.svg" alt="npm version">
+</a>
+<a href="https://github.com/oayres/babel-plugin-react-ssr/blob/master/LICENSE.md">
+  <img src="https://img.shields.io/npm/l/babel-plugin-react-ssr.svg" alt="license">
+</a>
+<a href="https://david-dm.org/oayres/babel-plugin-react-ssr">
+  <img src="https://david-dm.org/oayres/babel-plugin-react-ssr/status.svg" alt="dependency status">
+</a>
+<a href="https://standardjs.com">
+  <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="JavaScript Style Guide" />
+</a>
+<br>
+
+## Overview
+
 A babel plugin to do the hidden dirty work for react-ssr. It is _strongly advised_ you use this babel plugin alongside `react-ssr` to acheive seamless server-side rendering. This plugin will find every React component during transpilation and do the following:
 
 - Add a static `_ssrWaitsFor` array
