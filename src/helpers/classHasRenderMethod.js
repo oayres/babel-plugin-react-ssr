@@ -5,7 +5,7 @@ const classHasRenderMethod = path => {
 
   const members = path.node.body.body
 
-  for (var i = 0; i < members.length; i++) {
+  for (let i = 0; i < members.length; i++) {
     if (members[i].type == 'ClassMethod' && members[i].key.name == 'render') {
       return true
     }

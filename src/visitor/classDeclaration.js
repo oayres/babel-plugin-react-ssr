@@ -1,22 +1,24 @@
 import classHasRenderMethod from '../helpers/classHasRenderMethod'
 import assignStaticArray from '../helpers/assignStaticArray'
 
-const injectIfJSXElement = (child, waitsFor = []) => {
+let tempPath
+
+const injectIfJSXElement = (t, child, waitsFor = []) => {
   if (child.type === 'JSXElement' && child.openingElement) {
     const element = child.openingElement.name
     const isJSX = element.type === 'JSXIdentifier'
     const isNotDOMElement = element.name !== element.name.toLowerCase()
 
     if (isJSX && isNotDOMElement) {
-      waitsFor.push(child)
+      const el = t.identifier(element.name)
+      waitsFor.push(el)
     }
   }
 
   return waitsFor
 }
 
-const extractComponents = (waitsFor, propertyOrMethod) => {
-  console.info('Got a property or method: ', propertyOrMethod)
+const extractComponents = (t, waitsFor, propertyOrMethod) => {
   const subBody = propertyOrMethod.body.body
 
   if (subBody) {
@@ -26,7 +28,7 @@ const extractComponents = (waitsFor, propertyOrMethod) => {
       returnStatements.forEach(statement => {
         if (statement.argument.type === 'JSXElement' && statement.argument.children && statement.argument.children.length) {
           statement.argument.children.forEach(child => {
-            waitsFor = injectIfJSXElement(child, waitsFor)
+            waitsFor = injectIfJSXElement(t, child, waitsFor)
           })
         }
       })
@@ -58,6 +60,7 @@ const extractPropsForServerRender = (babel, propsForServerRender, propertyOrMeth
 
 const classDeclaration = (babel, path, state) => {
   if (classHasRenderMethod(path)) {
+    tempPath = path
     const body = path.node.body.body || []
     let waitsFor = []
     let propsForServerRender = []
@@ -69,13 +72,14 @@ const classDeclaration = (babel, path, state) => {
       }
 
       if (propertyOrMethod.type === 'ClassMethod') {
-        waitsFor = extractComponents(waitsFor, propertyOrMethod)
+        waitsFor = extractComponents(babel.types, waitsFor, propertyOrMethod)
       }
     })
 
     assignStaticArray(path.get('body'), babel.types, '_ssrProps', propsForServerRender)
     // console.info('The waitsFor property: ', waitsFor)
-    // assignStaticArray(path.get('body'), babel.types, '_ssrWaitsFor', waitsFor)
+
+    assignStaticArray(path.get('body'), babel.types, '_ssrWaitsFor', waitsFor)
   }
 }
 

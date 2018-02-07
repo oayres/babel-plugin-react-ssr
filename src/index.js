@@ -17,7 +17,7 @@ const transform = babel => {
         const decorator = t.variableDeclaration('var', [
           t.variableDeclarator(ref, 
             t.callExpression(
-              t.identifier('_cohereHoc'),
+              t.identifier('ssrFetchData'),
               [node.declaration]
             )
           )
@@ -43,13 +43,13 @@ const transform = babel => {
             return
           }
 
-          if (!(file.get('hasJSX') && !scope.hasBinding('_cohereHoc'))) {
+          if (!(file.get('hasJSX') && !scope.hasBinding('ssrFetchData'))) {
             return
           }
 
           const cohereImport = t.importDeclaration([
-            t.importDefaultSpecifier(t.identifier('_cohereHoc')),
-          ], t.stringLiteral('react-cohere/lib/fetchData'))
+            t.importDefaultSpecifier(t.identifier('ssrFetchData')),
+          ], t.stringLiteral('react-ssr/lib/fetchData'))
 
           node.body.unshift(cohereImport)
         }
