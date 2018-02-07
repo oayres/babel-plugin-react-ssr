@@ -1,8 +1,6 @@
 # babel-plugin-react-ssr
 
-A babel plugin to do the hidden dirty work for react-ssr. It is _strongly advised_ you use this babel plugin alongside `react-ssr` to acheive seamless server-side rendering.
-
-This plugin will find every React component during transpilation and do the following:
+A babel plugin to do the hidden dirty work for react-ssr. It is _strongly advised_ you use this babel plugin alongside `react-ssr` to acheive seamless server-side rendering. This plugin will find every React component during transpilation and do the following:
 
 - Add a static `_ssrWaitsFor` array
 
