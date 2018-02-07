@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-react-ssr",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Dynamically generates static references on React components to data calls for server-side rendering.",
   "repository": "oayres/babel-plugin-react-ssr",
   "author": "Owen Ayres <owen.ayres@gmail.com>",
