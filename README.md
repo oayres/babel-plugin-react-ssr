@@ -16,7 +16,7 @@
 
 ## Overview
 
-A babel plugin to do the hidden dirty work for react-ssr. It is _strongly advised_ you use this babel plugin alongside `react-ssr` to acheive seamless server-side rendering. This plugin will find every React component during transpilation and do the following:
+A babel plugin to do the hidden dirty work for react-ssr. You **must** currently use this plugin to acheive seamless server-side rendering, but you could probably manually do the steps this plugin does for you if you wish. This plugin will find every React component during transpilation and do the following:
 
 - Add a static `_ssrWaitsFor` array
 
@@ -30,6 +30,7 @@ Read the example below if you'd like know why these hidden properties are added.
 ## Installation
 
 ```sh
+$ npm install react-ssr --save
 $ npm install babel-plugin-react-ssr --save-dev
 ```
 
@@ -86,6 +87,8 @@ The plugin will detect the `HomePage` has a `static fetchData` method and theref
 
 - Wrap it in a HOC (that comes from `react-ssr`)
 ```js
+import ssrFetchData from 'react-ssr/lib/fetchData'
+// the component code in between
 export default ssrFetchData(HomePage)
 ```
 
