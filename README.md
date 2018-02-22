@@ -48,6 +48,7 @@ Let's assume you have a page like this, with data calls you want to server-side 
 ```jsx
 import React, { Component } from 'react'
 import MyComponent from './components/MyComponent'
+import Test from './components/Test'
 
 class HomePage extends Component {
   static fetchData () {
@@ -64,12 +65,17 @@ class HomePage extends Component {
     }
   }
 
+  renderTest () {
+    return <Test />
+  }
+
   render () {
     return (
       <div>
         Here's the title prop: {this.props.title}
         {this.props.thing}
         <MyComponent />
+        {this.renderTest()}
       </div>
     )
   }
@@ -78,22 +84,23 @@ class HomePage extends Component {
 export default HomePage
 ```
 
-Let's also assume your `MyComponent` imported in that example also has a `static fetchData` method.
+The babel plugin will:
 
-The plugin will detect the `HomePage` has a `static fetchData` method and therefore carry out its three tasks:
+- Add a static `_ssrWaitsFor`, populating it with `MyComponent` and `Test`
+```js
+HomePage._ssrWaitsFor = [
+  MyComponent,
+  Test
+]
+```
+
+The plugin will detect the `HomePage` has a `static fetchData` method and therefore:
 
 - Wrap it in a HOC (that comes from `react-ssr`)
 ```js
 import ssrFetchData from 'react-ssr/lib/fetchData'
 // the component code in between
 export default ssrFetchData(HomePage)
-```
-
-- Add a static `_ssrWaitsFor`, populating it with `MyComponent` after detecting it also has a `static fetchData`
-```js
-HomePage._ssrWaitsFor = [
-  MyComponent
-]
 ```
 
 `react-ssr` can then:
