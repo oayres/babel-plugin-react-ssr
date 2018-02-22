@@ -1,5 +1,5 @@
 const assignStaticProperty = (path, types, propertyName, propertyValue) => {
-  if (propertyValue && propertyValue.length) {
+  if (propertyValue && propertyValue.length && path && typeof path.unshiftContainer === 'function') {
     const node = types.classProperty(
       types.identifier(propertyName),
       types.arrayExpression(propertyValue),
