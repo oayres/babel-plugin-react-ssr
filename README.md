@@ -16,11 +16,11 @@
 
 ## Overview
 
-A babel plugin to do the hidden dirty work for react-ssr. You **must** currently use this plugin to acheive seamless server-side rendering, but you could probably manually do the steps this plugin does for you if you wish. This plugin will find every consumed React component during transpilation and do the following:
+A babel plugin to remove the need to declare _ssrWaitsFor array and the ssrFetchData HOC on any component. This plugin will find every consumed React component during transpilation and do the following:
 - Add a static `_ssrWaitsFor` array
 
 If the React component contains a `static fetchData` method, it will also:
-- Wrap it in a HOC (higher order component)
+- Add an import and wrap the component in a HOC (higher order component)
 
 Read the example below if you'd like know why these hidden properties are added.
 
@@ -98,4 +98,4 @@ HomePage._ssrWaitsFor = [
 
 `react-ssr` can then:
 - Use the HOC client-side to execute `fetchData` methods.
-- Read the `_ssrWaitsFor` property before a server-side render to simulatenously call all `static fetchData` methods.
+- Read the `_ssrWaitsFor` property before a server-side render to simulatenously call all `static fetchData` methods required for the matched route.
