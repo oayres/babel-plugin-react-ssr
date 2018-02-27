@@ -63,7 +63,7 @@ const transform = babel => {
       JSXOpeningElement (path, { file }) {
         file.set('hasJSX', true)
         const element = path.node.name
-        const isNotDOMElement = element.name !== element.name.toLowerCase()
+        const isNotDOMElement = element.name && element.name !== element.name.toLowerCase()
 
         if (isNotDOMElement) {
           const waitsFor = file.get('_ssrWaitsFor') || []
