@@ -13,7 +13,7 @@ const transform = babel => {
 
         const {node} = path
         const ref = node.declaration.id || path.scope.generateUidIdentifier('default')
-        const waitsFor = file.get('_ssrWaitsFor')
+        const waitsFor = file.get('ssrWaitsFor')
         const hasFetchData = file.get('hasFetchData')
 
         if ((waitsFor || hasFetchData) && typeof node.declaration.name === 'undefined') {
@@ -28,13 +28,13 @@ const transform = babel => {
 
         if (waitsFor) {
           const waitsForIdentifiers = waitsFor.map(waiter => t.identifier(waiter))
-          const _ssrWaitsFor = t.assignmentExpression(
+          const ssrWaitsFor = t.assignmentExpression(
             '=',
-            t.memberExpression(t.identifier(node.declaration.name), t.identifier('_ssrWaitsFor')),
+            t.memberExpression(t.identifier(node.declaration.name), t.identifier('ssrWaitsFor')),
             t.arrayExpression(waitsForIdentifiers)
           )
   
-          path.insertBefore(_ssrWaitsFor)
+          path.insertBefore(ssrWaitsFor)
         }
 
         if (hasFetchData) {
@@ -66,14 +66,14 @@ const transform = babel => {
         const isNotDOMElement = element.name && element.name !== element.name.toLowerCase()
 
         if (isNotDOMElement) {
-          const waitsFor = file.get('_ssrWaitsFor') || []
+          const waitsFor = file.get('ssrWaitsFor') || []
           const component = element.name
 
           if (!waitsFor.includes(component)) {
             waitsFor.push(component)
           }
 
-          file.set('_ssrWaitsFor', waitsFor)
+          file.set('ssrWaitsFor', waitsFor)
         }
       },
 

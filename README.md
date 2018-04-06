@@ -16,8 +16,8 @@
 
 ## Overview
 
-A babel plugin to remove the need to declare _ssrWaitsFor array and the ssrFetchData HOC on any component. This plugin will find every consumed React component during transpilation and do the following:
-- Add a static `_ssrWaitsFor` array
+A babel plugin to remove the need to declare ssrWaitsFor array and the ssrFetchData HOC on any component. This plugin will find every consumed React component during transpilation and do the following:
+- Add a static `ssrWaitsFor` array
 
 If the React component contains a `static fetchData` method, it will also:
 - Add an import and wrap the component in a HOC (higher order component)
@@ -86,9 +86,9 @@ export default HomePage
 
 The babel plugin will:
 
-- Add a static `_ssrWaitsFor`, populating it with `MyComponent` and `Test`
+- Add a static `ssrWaitsFor`, populating it with `MyComponent` and `Test`
 ```js
-HomePage._ssrWaitsFor = [
+HomePage.ssrWaitsFor = [
   MyComponent,
   Test
 ]
@@ -105,4 +105,4 @@ export default ssrFetchData(HomePage)
 
 `react-ssr` can then:
 - Use the HOC client-side to execute `fetchData` methods.
-- Read the `_ssrWaitsFor` property before a server-side render to simulatenously call all `static fetchData` methods required for the matched route.
+- Read the `ssrWaitsFor` property before a server-side render to simulatenously call all `static fetchData` methods required for the matched route.
