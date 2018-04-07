@@ -11,17 +11,16 @@ const transform = babel => {
         // if (!path.get('declaration').isClassDeclaration()) return
         if (!file.get('hasJSX') || file.get(path.node.declaration.name) || path.node.declaration.name === '_default') return
 
-        const {node} = path
+        const { node } = path
         const ref = node.declaration.id || path.scope.generateUidIdentifier('default')
         const waitsFor = file.get('ssrWaitsFor')
         const hasFetchData = file.get('hasFetchData')
 
         if ((waitsFor || hasFetchData) && typeof node.declaration.name === 'undefined') {
-          console.info(node.declaration)
           throw new Error(`
 
             react-ssr found an export default that was not exporting with a plain variable, instead found ${node.declaration.type}.
-            Assign that to a variable and export that variable as default.
+            Assign that to a variable with a unique name and export that variable as default.
 
           `)
         }
@@ -69,7 +68,7 @@ const transform = babel => {
           const waitsFor = file.get('ssrWaitsFor') || []
           const component = element.name
 
-          if (!waitsFor.includes(component)) {
+          if (!waitsFor.includes(component) && path.scope.hasBinding(component)) {
             waitsFor.push(component)
           }
 
