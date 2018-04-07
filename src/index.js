@@ -20,7 +20,13 @@ const transform = babel => {
           throw new Error(`
 
             react-ssr found an export default that was not exporting with a plain variable, instead found ${node.declaration.type}.
-            Assign that to a variable with a unique name and export that variable as default.
+            Assign that to a variable with a unique name and export that variable as the default instead.
+
+            It should look like:
+            const myUniqueVariable = someThingYouDo(Component)
+            export default myUniqueVariable
+
+            This error was found in ${file.opts.sourceFileName}
 
           `)
         }
