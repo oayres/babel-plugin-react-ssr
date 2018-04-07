@@ -11,7 +11,7 @@ const transform = babel => {
         // if (!path.get('declaration').isClassDeclaration()) return
         if (!file.get('hasJSX') || file.get(path.node.declaration.name) || path.node.declaration.name === '_default') return
 
-        const { node } = path
+        const { node, scope } = path
         const ref = node.declaration.id || path.scope.generateUidIdentifier('default')
         const waitsFor = file.get('ssrWaitsFor')
         const hasFetchData = file.get('hasFetchData')
@@ -26,7 +26,7 @@ const transform = babel => {
         }
 
         if (waitsFor) {
-          const waitsForIdentifiers = waitsFor.map(waiter => t.identifier(waiter))
+          const waitsForIdentifiers = waitsFor.filter(waiter => scope.hasBinding(waiter)).map(waiter => t.identifier(waiter))
           const ssrWaitsFor = t.assignmentExpression(
             '=',
             t.memberExpression(t.identifier(node.declaration.name), t.identifier('ssrWaitsFor')),
@@ -68,7 +68,7 @@ const transform = babel => {
           const waitsFor = file.get('ssrWaitsFor') || []
           const component = element.name
 
-          if (!waitsFor.includes(component) && path.scope.hasBinding(component)) {
+          if (!waitsFor.includes(component)) {
             waitsFor.push(component)
           }
 
