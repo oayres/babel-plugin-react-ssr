@@ -9,6 +9,8 @@ const classDeclaration = (babel, path, state) => {
         state.file.set('hasFetchData', true)
       }
     })
+
+    // setDisplayNameAfter(path, path.node.id, babel.types)
   }
 }
 
