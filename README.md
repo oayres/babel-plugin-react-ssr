@@ -104,5 +104,5 @@ export default ssrFetchData(HomePage)
 ```
 
 `react-ssr` can then:
-- Use the HOC client-side to execute `fetchData` methods.
+- Use the HOC client-side to execute `fetchData` methods (e.g. if you navigated to the HomePage from another page within the app, via react-router links or similar).
 - Read the `ssrWaitsFor` property before a server-side render to simulatenously call all `static fetchData` methods required for the matched route.
