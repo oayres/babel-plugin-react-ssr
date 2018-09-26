@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-react-ssr",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0",
   "description": "Adds the ssrWaitsFor array and ssrFetchData HOC on required components automatically for react-ssr.",
   "repository": "oayres/babel-plugin-react-ssr",
   "author": "Owen Ayres <owen.ayres@gmail.com>",

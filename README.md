@@ -14,9 +14,9 @@
 </a>
 <br>
 
-## Overview
+## 🔍 Overview
 
-A babel plugin to remove the need to declare ssrWaitsFor array and the ssrFetchData HOC on any component. This plugin will find every consumed React component during transpilation and do the following:
+A babel plugin for react-ssr to remove the need to declare ssrWaitsFor array and the ssrFetchData HOC on any component. It abstracts some complexity away to enable react-ssr to be one single, simple rule for developers. This plugin will find every consumed React component during transpilation and do the following:
 - Add a static `ssrWaitsFor` array
 
 If the React component contains a `static fetchData` method, it will also:
@@ -24,14 +24,14 @@ If the React component contains a `static fetchData` method, it will also:
 
 Read the example below if you'd like know why these hidden properties are added.
 
-## Installation
+## ⏳ Installation
 
 ```sh
 $ npm install react-ssr --save
 $ npm install babel-plugin-react-ssr --save-dev
 ```
 
-## Usage
+## 🔦 Usage
 
 Chuck me straight in the `.babelrc` and you're *done*.
 
@@ -41,7 +41,7 @@ Chuck me straight in the `.babelrc` and you're *done*.
 }
 ```
 
-## Example
+## 🎁 Example
 
 Let's assume you have a page like this, with data calls you want to server-side render:
 
