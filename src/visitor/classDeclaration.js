@@ -1,4 +1,5 @@
 import classHasRenderMethod from '../helpers/classHasRenderMethod'
+import setDisplayNameAfter from '../helpers/setDisplayNameAfter'
 
 const classDeclaration = (babel, path, state) => {
   if (classHasRenderMethod(path)) {
@@ -10,7 +11,7 @@ const classDeclaration = (babel, path, state) => {
       }
     })
 
-    // setDisplayNameAfter(path, path.node.id, babel.types)
+    setDisplayNameAfter(path, path.node.id, babel.types)
   }
 }
 
