@@ -71,11 +71,13 @@ const transform = babel => {
         const isNotDOMElement = element.name && element.name !== element.name.toLowerCase()
 
         if (isNotDOMElement) {
+          const parentComponentName = file.get('displayName')
           const waitsFor = file.get('ssrWaitsFor') || []
-          const component = element.name
+          const currentComponentName = element.name
 
-          if (!waitsFor.includes(component)) {
-            waitsFor.push(component)
+          // Only add in the wait for array when its not already there and its not the same component as the parent (recurisve components)
+          if (!waitsFor.includes(currentComponentName) && (currentComponentName !== parentComponentName)) {
+            waitsFor.push(currentComponentName)
           }
 
           file.set('ssrWaitsFor', waitsFor)
